@@ -6,11 +6,11 @@
     <title>منصة المدارس القرآنية الموحدة</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #145A32; --gold: #D4AC0D; --bg: #F9F9F3; --btn-bg: #ecf0f1; --dark: #2c3e50; }
+        :root { --primary: #145A32; --gold: #D4AC0D; --bg: #F9F9F3; --btn-bg: #ecf0f1; --dark: #2c3e50; --blue: #2980b9; --red: #c0392b; }
         
         body {
-            font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; padding: 20px;
-            display: flex; flex-direction: column; align-items: center; padding-bottom: 240px;
+            font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; padding: 15px;
+            display: flex; flex-direction: column; align-items: center; padding-bottom: 180px;
             min-height: 100vh;
             background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
             background-size: 20px 20px;
@@ -21,132 +21,128 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.98); z-index: 3000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: 0.3s;
+            transition: opacity 0.3s;
         }
         .loader {
             border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%;
-            width: 60px; height: 60px; animation: spin 1s linear infinite; margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(20, 90, 50, 0.2);
+            width: 50px; height: 50px; animation: spin 0.8s linear infinite; margin-bottom: 15px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- تصميم الرأس (مطابق للصورة) --- */
+        header { 
+            background: white; padding: 15px; border-radius: 15px; text-align: center; 
+            border: 1px solid #eee; border-top: 6px solid var(--gold); 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); width: 100%; max-width: 900px;
+            position: relative; margin-bottom: 20px; box-sizing: border-box;
+        }
+
+        .header-actions {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;
+        }
+
+        .btn-header {
+            border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; 
+            font-family: 'Cairo'; font-weight: bold; font-size: 0.85rem; color: white;
+            display: inline-flex; align-items: center; gap: 5px; text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s;
+        }
+        .btn-header:active { transform: translateY(1px); }
+
+        .btn-sync { background: var(--gold); color: #000; }
+        .btn-pin { background: var(--dark); }
+        .btn-logout { background: var(--red); margin-right: 5px; }
+
+        .mosque-title { font-family: 'Amiri'; color: var(--primary); font-size: 1.8rem; margin: 5px 0; font-weight: bold; line-height: 1.2; }
+        .sheikh-info { color: #d35400; font-weight: bold; font-size: 1.3rem; font-family: 'Amiri'; margin-bottom: 5px; }
+        .attendance-info { font-weight: bold; color: var(--primary); font-size: 1rem; }
+        
+        .save-indicator {
+            font-size: 0.8rem; font-weight: bold; color: #27ae60; margin-top: 5px; display: inline-block;
+        }
+
+        .btn-delete-halaqa {
+            position: absolute; bottom: 10px; left: 15px;
+            background: none; border: none; color: var(--red); 
+            font-size: 0.8rem; cursor: pointer; text-decoration: underline;
+        }
 
         /* --- شاشة الدخول --- */
         #login-screen { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh; text-align: center; }
         .login-box {
-            background: white; padding: 40px; border-radius: 20px; width: 100%;
+            background: white; padding: 40px; border-radius: 20px; width: 100%; box-sizing: border-box;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 6px solid var(--gold); border-bottom: 6px solid var(--primary);
         }
         .login-title { font-family: 'Amiri'; color: var(--primary); font-size: 2rem; margin-bottom: 25px; font-weight: bold; }
-        .login-label { display: block; text-align: right; margin-bottom: 8px; font-weight: bold; color: var(--dark); }
         
         select, input { 
-            width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #ddd; 
+            width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ddd; 
             font-family: 'Cairo'; font-size: 1rem; outline: none; text-align: center; 
-            box-sizing: border-box; margin-bottom: 20px; background: #fff; transition: 0.3s;
+            box-sizing: border-box; margin-bottom: 15px; background: #fff; transition: 0.3s;
         }
-        select:focus, input:focus { border-color: var(--gold); box-shadow: 0 0 8px rgba(212, 172, 13, 0.2); }
+        select:focus, input:focus { border-color: var(--gold); }
         
-        /* --- الأزرار --- */
-        button { padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; transition: 0.2s; font-size: 1rem; width: 100%; }
-        .btn-main { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(20, 90, 50, 0.2); }
-        .btn-main:hover { background: #0e4023; transform: translateY(-2px); }
-        .btn-sec { background: var(--gold); color: black; box-shadow: 0 4px 10px rgba(212, 172, 13, 0.2); }
-        .btn-danger { background: #c0392b; color: white; }
-        .btn-bulk { background: #34495e; color: white; }
-
-        /* --- واجهة التطبيق --- */
-        .screen-content { width: 100%; max-width: 900px; display: none; animation: fadeIn 0.5s; }
-        header { 
-            background: white; padding: 25px; border-radius: 20px; text-align: center; 
-            border: 1px solid #eee; border-top: 6px solid var(--gold); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative; margin-bottom: 25px; 
-        }
-        .header-top { display: flex; justify-content: space-between; align-items: center; position: absolute; top: 15px; left: 15px; right: 15px; }
-        
-        h1 { font-family: 'Amiri'; color: var(--primary); margin: 25px 0 5px; font-size: 1.8rem; }
-        .sheikh-name { color: #d35400; font-weight: bold; font-size: 1.2rem; font-family: 'Amiri'; }
+        /* --- الأزرار العامة --- */
+        .btn-main { background: var(--primary); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-sec { background: var(--gold); color: black; border:none; padding:10px; border-radius:10px; font-weight:bold; cursor:pointer; width:100%; }
         
         /* --- البطاقات --- */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; } 
+        .screen-content { width: 100%; max-width: 900px; display: none; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-top:15px; } 
+        
         .student-card { 
-            background: white; border-radius: 15px; padding: 15px; position: relative; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; border-top: 4px solid #ccc;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; align-items: center; 
+            background: white; border-radius: 12px; padding: 12px; position: relative; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; border-top: 4px solid #ccc;
+            transition: all 0.2s; display: flex; flex-direction: column; align-items: center; 
         }
-        .student-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .student-card.present { border-color: var(--primary); background: linear-gradient(to bottom, #ffffff, #f4fcf7); border-top-color: var(--gold); }
         
         .icon-wrapper { 
-            width: 55px; height: 55px; background: #fafafa; border-radius: 50%; margin: 5px auto 10px; 
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 2px solid #eee; color: #ccc; 
+            width: 50px; height: 50px; background: #fafafa; border-radius: 50%; margin-bottom: 8px; 
+            display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 2px solid #eee; color: #ccc; 
         }
-        .student-name { font-weight: bold; font-size: 1.2rem; color: #444; text-align: center; margin-bottom: 8px; font-family: 'Amiri'; }
-        
-        .student-card.present { border-color: var(--primary); background: linear-gradient(to bottom, #ffffff, #f4fcf7); border-top-color: var(--gold); }
-        .student-card.present .icon-wrapper { background: white; border-color: var(--gold); color: var(--primary); box-shadow: 0 0 10px rgba(212, 172, 13, 0.3); }
+        .student-card.present .icon-wrapper { background: white; border-color: var(--gold); color: var(--primary); }
+        .student-name { font-weight: bold; font-size: 1.1rem; color: #444; text-align: center; font-family: 'Amiri'; margin-bottom: 5px; }
         .student-card.present .student-name { color: var(--primary); }
-        
+
         /* أدوات البطاقة */
-        .student-tools { display: none; width: 100%; flex-direction: column; gap: 6px; margin-top: 5px; animation: fadeIn 0.3s; }
+        .student-tools { display: none; width: 100%; flex-direction: column; gap: 5px; margin-top: 5px; }
         .student-card.present .student-tools { display: flex; }
-        .tool-row { display: flex; gap: 5px; width: 100%; }
-        .mini-select { flex-grow: 1; padding: 5px; border: 1px solid var(--gold); border-radius: 8px; font-family: 'Cairo'; font-size: 0.85rem; outline: none; text-align: center; background: white; margin: 0; }
-        .btn-step { width: 30px; height: 30px; border-radius: 8px; border: none; background: #eee; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .tool-row { display: flex; gap: 4px; width: 100%; }
+        .mini-select { flex-grow: 1; padding: 4px; border: 1px solid var(--gold); border-radius: 6px; font-family: 'Cairo'; font-size: 0.8rem; outline: none; text-align: center; background: white; }
+        .btn-step { width: 28px; height: 28px; border-radius: 6px; border: none; background: #eee; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .btn-step:hover { background: var(--gold); color: white; }
-        .btn-del { position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; background: #fff; color: #e74c3c; border: 1px solid #e74c3c; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; opacity: 0.5; transition: 0.2s; }
-        .btn-del:hover { opacity: 1; background: #e74c3c; color: white; }
+        .btn-del { position: absolute; top: 5px; left: 5px; width: 20px; height: 20px; background: #fff; color: var(--red); border: 1px solid var(--red); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.6; }
 
-        /* --- النوافذ المنبثقة (Modal) --- */
-        .modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; backdrop-filter: blur(3px); }
-        .modal-content { background-color: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
-        textarea { width: 100%; height: 150px; margin: 15px 0; padding: 12px; border-radius: 12px; border: 2px solid #eee; font-family: 'Cairo'; resize: none; outline: none; box-sizing: border-box; }
+        /* --- النوافذ والتحكم --- */
+        .modal { display: none; position: fixed; z-index: 4000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+        .modal-content { background-color: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; border: 2px solid var(--gold); }
+        textarea { width: 100%; height: 150px; margin: 15px 0; padding: 10px; border-radius: 10px; border: 2px solid #eee; font-family: 'Cairo'; resize: none; box-sizing: border-box; }
 
-        /* --- التحكم السفلي --- */
-        .controls { position: fixed; bottom: 0; background: white; width: 100%; padding: 15px; box-shadow: 0 -5px 25px rgba(0,0,0,0.1); display: none; flex-direction: column; gap: 10px; align-items: center; z-index: 100; border-top: 4px solid var(--gold); }
-        .row { display: flex; gap: 10px; width: 100%; justify-content: center; }
-        
-        /* --- الطباعة (A4 Report) --- */
+        .controls { position: fixed; bottom: 0; background: white; width: 100%; padding: 12px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); display: none; flex-direction: column; gap: 8px; z-index: 100; border-top: 4px solid var(--gold); }
+        .row { display: flex; gap: 8px; width: 100%; justify-content: center; }
+        .btn-bulk { background: #34495e; color: white; width: auto; padding: 12px 15px; border:none; border-radius:10px; cursor:pointer; font-weight:bold; }
+
+        /* --- الطباعة --- */
         #printable-area { display: none; }
         @media print {
             .screen-content, #login-screen, .controls, #loading-overlay, .modal { display: none !important; }
-            body { background: white; margin: 0; padding: 0; color: black; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            body { background: white; margin: 0; padding: 0; }
             #printable-area { display: block; width: 100%; padding: 10mm; box-sizing: border-box; }
-            
-            thead { display: table-header-group; } 
-            tr { page-break-inside: avoid; } 
-            .footer-signature, .stats-grid, .report-info { page-break-inside: avoid; }
-
+            table { width: 100%; border-collapse: collapse; font-size: 12pt; text-align: center; margin-bottom: 20px; }
+            th, td { border: 1px solid #000; padding: 5px; } th { background: #eee !important; }
             .official-header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-            .official-header h3 { margin: 2px 0; font-weight: normal; font-size: 11pt; color: #444; }
-            .official-header h2 { margin: 8px 0; font-size: 18pt; font-weight: bold; color: #000; }
-            
-            .center-wrapper { text-align: center; margin-bottom: 15px; }
-            .report-title { font-size: 20pt; font-weight: bold; display: inline-block; padding: 5px 30px; border: 2px solid #333; border-radius: 8px; background: #fdfdfd; }
-            
-            .report-info { display: flex; justify-content: space-between; border: 1px solid #777; border-radius: 5px; padding: 10px; margin-bottom: 15px; background: #fcfcfc; }
-            .right-info { text-align: right; width: 50%; border-left: 1px dashed #ccc; }
-            .left-info { text-align: left; width: 50%; direction: ltr; } .left-info div { direction: rtl; }
-            
-            .stats-grid { display: flex; border: 1px solid #777; border-radius: 5px; background: #f9f9f9; margin-bottom: 20px; }
-            .stat-item { flex: 1; text-align: center; padding: 8px; border-left: 1px dashed #ccc; } .stat-item:last-child { border-left: none; }
-            .stat-title { display: block; font-size: 10pt; color: #555; font-weight: bold; } .stat-count { font-size: 14pt; font-weight: bold; }
-
-            table { width: 100%; border-collapse: collapse; font-size: 12pt; text-align: center; margin-bottom: 30px; }
-            th { background-color: #eee !important; border: 1px solid #444; padding: 8px; font-weight: bold; }
-            td { border: 1px solid #444; padding: 6px; height: 35px; vertical-align: middle; }
-            tr:nth-child(even) { background-color: #fcfcfc; }
-            
-            .footer-signature { display: flex; justify-content: space-between; padding: 0 50px; font-size: 14pt; font-weight: bold; margin-top: 40px; }
+            .stats-grid { display: flex; border: 1px solid #777; margin-bottom: 20px; }
+            .stat-item { flex: 1; text-align: center; border-left: 1px solid #ccc; padding: 5px; } .stat-item:last-child { border-left: none; }
+            .footer-signature { display: flex; justify-content: space-between; margin-top: 40px; font-weight: bold; }
         }
-        
-        #save-status { font-size: 0.9rem; font-weight: bold; color: #27ae60; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="loading-overlay">
         <div class="loader"></div>
-        <div id="loading-text" style="font-weight:bold; margin-top:10px;">جاري تحميل النظام...</div>
+        <div id="loading-text" style="font-weight:bold;">جاري التحميل...</div>
     </div>
 
     <div id="login-screen">
@@ -154,14 +150,14 @@
             <div class="login-title">المنصة الموحدة للمدارس القرآنية</div>
             
             <div id="step-1">
-                <label class="login-label">🏢 اختر المدرسة / المسجد:</label>
+                <label style="display:block; text-align:right; font-weight:bold; margin-bottom:5px;">🏢 اختر المدرسة / المسجد:</label>
                 <select id="mosqueSelect" onchange="loadMosqueData()">
-                    <option value="" disabled selected>-- جاري الاتصال بالدليل... --</option>
+                    <option value="" disabled selected>-- جاري الاتصال... --</option>
                 </select>
             </div>
 
-            <div id="step-2" style="display:none; margin-top:20px; border-top:1px dashed #ccc; padding-top:20px; animation: fadeIn 0.5s;">
-                <label class="login-label">📖 اختر حلقة المعلم:</label>
+            <div id="step-2" style="display:none; animation: fadeIn 0.5s;">
+                <label style="display:block; text-align:right; font-weight:bold; margin-bottom:5px;">📖 اختر حلقة المعلم:</label>
                 <select id="halaqaSelect" onchange="document.getElementById('pinInput').value=''"></select>
                 <input type="password" id="pinInput" placeholder="الرمز السري (PIN)" maxlength="4">
                 <button class="btn-main" onclick="attemptLogin()">دخول للنظام</button>
@@ -174,16 +170,25 @@
 
     <div class="screen-content" id="app-content">
         <header>
-            <div class="header-top">
-                <div id="save-status">✅</div>
-                <button style="background:#e74c3c; color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-weight:bold;" onclick="logout()">خروج</button>
+            <div class="header-actions">
+                <div>
+                    <button class="btn-header btn-sync" onclick="forceSync()">مزامنة 🔄</button>
+                </div>
+                <div>
+                    <button class="btn-header btn-pin" onclick="changeCurrentPin()">تغيير الرمز 🔑</button>
+                    <button class="btn-header btn-logout" onclick="logout()">خروج 🔒</button>
+                </div>
             </div>
-            
-            <h1 id="app-mosque-title">...</h1>
-            <div class="sheikh-name">حلقة المعلم: <span id="display-sheikh">--</span></div>
-            <div style="margin-top:10px; font-weight:bold; color:var(--primary);">
-                الحضور اليوم: <span id="count">0</span>
+
+            <div class="save-indicator">
+                <span id="save-status">البيانات محفوظة ✅</span>
             </div>
+
+            <h1 class="mosque-title" id="app-mosque-title">مسجد التقوى</h1>
+            <div class="sheikh-info">حلقة: <span id="display-sheikh">--</span></div>
+            <div class="attendance-info">الحضور اليوم: <span id="count">0 / 0</span></div>
+
+            <button class="btn-delete-halaqa" onclick="deleteCurrentHalaqa()">حذف الحلقة</button>
         </header>
 
         <input type="text" style="width:100%; padding:14px; border-radius:12px; border:2px solid #eee; font-family:'Cairo'; text-align:center; outline:none;" placeholder="🔍 بحث عن طالب..." onkeyup="render(this.value)">
@@ -194,11 +199,10 @@
     <div id="bulkModal" class="modal">
         <div class="modal-content">
             <h3>إضافة قائمة طلاب</h3>
-            <p style="font-size:0.9rem; color:#666;">قم بلصق الأسماء هنا (كل اسم في سطر):</p>
-            <textarea id="bulkText" placeholder="محمد علي&#10;ياسين أحمد&#10;عبد الرحمن..."></textarea>
+            <textarea id="bulkText" placeholder="الاسم الأول&#10;الاسم الثاني..."></textarea>
             <div class="row">
-                <button class="btn-main" style="flex:1;" onclick="saveBulkData()">حفظ القائمة</button>
-                <button class="btn-danger" style="flex:1;" onclick="closeBulkModal()">إلغاء</button>
+                <button class="btn-main" onclick="saveBulkData()">حفظ</button>
+                <button class="btn-danger" onclick="closeBulkModal()">إلغاء</button>
             </div>
         </div>
     </div>
@@ -208,9 +212,9 @@
         <div class="row" style="width:100%">
             <input type="text" id="newStudentName" placeholder="اسم طالب..." style="margin:0; flex-grow:1;">
             <button class="btn-main" style="width:auto;" onclick="addStudent()">➕</button>
-            <button class="btn-bulk" style="width:auto;" onclick="openBulkModal()">📝 قائمة</button>
+            <button class="btn-bulk" onclick="openBulkModal()">📝</button>
         </div>
-        <button class="btn-danger" onclick="resetDay()">🗑️ تصفير اليوم (بدء يوم جديد)</button>
+        <button class="btn-danger" style="background:#c0392b; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer;" onclick="resetDay()">🗑️ تصفير اليوم</button>
     </div>
 
     <div id="printable-area">
@@ -220,11 +224,9 @@
             <h3>مديرية الشؤون الدينية والأوقاف لولاية <span id="print-wilaya"></span></h3>
             <h2 id="print-mosque-title"></h2>
         </div>
-        
         <div class="center-wrapper">
-            <div class="report-title">تقرير يومي للحلقة القرآنية</div>
+            <div class="report-title" style="font-size:18pt; font-weight:bold; border:2px solid black; padding:5px 20px; border-radius:8px; display:inline-block; margin-bottom:15px;">تقرير يومي للحلقة القرآنية</div>
         </div>
-
         <div class="report-info">
             <div class="right-info">
                 <div><strong>رقم التقرير:</strong> <span id="print-report-no"></span></div>
@@ -235,92 +237,79 @@
                 <div><strong>الإحصاء:</strong> <span id="print-stats"></span></div>
             </div>
         </div>
-
         <div class="stats-grid">
-            <div class="stat-item"><span class="stat-title">إبتدائي</span><span class="stat-count" id="c-prim">0</span></div>
-            <div class="stat-item"><span class="stat-title">متوسط</span><span class="stat-count" id="c-mid">0</span></div>
-            <div class="stat-item"><span class="stat-title">ثانوي</span><span class="stat-count" id="c-sec">0</span></div>
-            <div class="stat-item"><span class="stat-title">جامعي</span><span class="stat-count" id="c-univ">0</span></div>
+            <div class="stat-item"><strong>إبتدائي:</strong> <span id="c-prim">0</span></div>
+            <div class="stat-item"><strong>متوسط:</strong> <span id="c-mid">0</span></div>
+            <div class="stat-item"><strong>ثانوي:</strong> <span id="c-sec">0</span></div>
+            <div class="stat-item"><strong>جامعي:</strong> <span id="c-univ">0</span></div>
         </div>
-
         <table id="print-table">
-            <thead>
-                <tr>
-                    <th width="5%">رقم</th>
-                    <th width="35%">اسم الطالب</th>
-                    <th width="15%">الطور</th>
-                    <th width="10%">الحالة</th>
-                    <th width="20%">المحفوظ</th>
-                    <th width="15%">ملاحظات المعلم</th>
-                </tr>
-            </thead>
+            <thead><tr><th>رقم</th><th>الاسم</th><th>الطور</th><th>الحالة</th><th>المحفوظ</th><th>ملاحظات</th></tr></thead>
             <tbody id="print-body"></tbody>
         </table>
-        
-        <div class="footer-signature">
-            <div>توقيع المعلم</div>
-            <div>ختم الإدارة / الإمام</div>
-        </div>
+        <div class="footer-signature"><div>توقيع المعلم</div><div>ختم الإدارة</div></div>
     </div>
 
     <script>
         // ==========================================
-        // 🔗 رابط ملف الدليل الرئيسي (Master Sheet)
+        // 🔗 رابط الدليل الرئيسي (استبدله بالرابط العادي)
         // ==========================================
-        // 🔴 استبدل هذا النص برابط السكربت العادي (Direct Link) لقائمة المساجد
-        const MASTER_DIR_URL = "https://script.google.com/macros/s/AKfycbzH8e9GMVMMSiff6-Ccp4jCH_zLlhi9JEaPHZKOuRaYP9jXOdThd69ZhJqWZBf1n-u5Ng/exec"; 
+        const MASTER_DIR_URL = "https://script.google.com/macros/s/AKfycbzsTqXLWLB8iY4h6YnVkdcbfZW8feKwx6HJrbNEzJA7GL-jMLjnEiqW64T-aftK6o-aOQ/exec"; 
         // ==========================================
 
-        // القوائم الثابتة
-        const levelsList = [
-            "1 إبتدائي", "2 إبتدائي", "3 إبتدائي", "4 إبتدائي", "5 إبتدائي",
-            "1 متوسط", "2 متوسط", "3 متوسط", "4 متوسط",
-            "1 ثانوي", "2 ثانوي", "3 ثانوي", "جامعي"
-        ];
+        const levelsList = ["1 إبتدائي", "2 إبتدائي", "3 إبتدائي", "4 إبتدائي", "5 إبتدائي", "1 متوسط", "2 متوسط", "3 متوسط", "4 متوسط", "1 ثانوي", "2 ثانوي", "3 ثانوي", "جامعي"];
         const surahList = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"];
 
-        // متغيرات النظام
         let mosquesList = [];
         let currentMosqueData = null;
         let appData = { halaqat: [] };
         let selectedHalaqaIdx = -1;
         let saveTimer;
 
-        // --- 1. التشغيل والاتصال بالدليل ---
+        // --- 1. التشغيل الذكي (مع التخزين المؤقت) ---
         window.onload = async function() {
-            if(MASTER_DIR_URL.includes("PUT_YOUR")) {
-                alert("⚠️ الرجاء وضع رابط 'الدليل الرئيسي' في الكود ليعمل النظام!");
+            // التحقق من وجود نسخة مخزنة لتسريع الفتح
+            const cachedMosques = localStorage.getItem('cachedMosques');
+            if (cachedMosques) {
+                mosquesList = JSON.parse(cachedMosques);
+                fillMosqueSelect();
                 document.getElementById('loading-overlay').style.display = 'none';
-                return;
+            }
+
+            // جلب النسخة الأحدث في الخلفية
+            if(MASTER_DIR_URL.includes("PUT_YOUR")) {
+                alert("يرجى وضع رابط الدليل الرئيسي!"); return;
             }
 
             try {
                 const res = await fetch(MASTER_DIR_URL);
                 mosquesList = await res.json();
-                
-                const select = document.getElementById('mosqueSelect');
-                select.innerHTML = '<option value="" disabled selected>-- اضغط للاختيار --</option>';
-                
-                mosquesList.forEach((m, index) => {
-                    const opt = document.createElement('option');
-                    opt.value = index;
-                    opt.text = m.name;
-                    select.appendChild(opt);
-                });
+                localStorage.setItem('cachedMosques', JSON.stringify(mosquesList)); // تحديث الكاش
+                fillMosqueSelect();
                 document.getElementById('loading-overlay').style.display = 'none';
             } catch (e) {
-                alert("خطأ في الاتصال بالدليل الرئيسي! تأكد من الرابط والإنترنت.");
-                document.getElementById('loading-text').innerText = "خطأ في الاتصال";
+                if (!cachedMosques) alert("خطأ في الاتصال!");
             }
         };
 
-        // --- 2. تحميل بيانات المسجد ---
+        function fillMosqueSelect() {
+            const select = document.getElementById('mosqueSelect');
+            const currentVal = select.value;
+            select.innerHTML = '<option value="" disabled selected>-- اضغط للاختيار --</option>';
+            mosquesList.forEach((m, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.text = m.name;
+                select.appendChild(opt);
+            });
+            if(currentVal) select.value = currentVal;
+        }
+
+        // --- 2. تحميل المسجد ---
         async function loadMosqueData() {
             const idx = document.getElementById('mosqueSelect').value;
             currentMosqueData = mosquesList[idx];
-            
             document.getElementById('loading-overlay').style.display = 'flex';
-            document.getElementById('loading-text').innerText = 'جاري الاتصال بـ ' + currentMosqueData.name;
             
             try {
                 const res = await fetch(currentMosqueData.url);
@@ -329,21 +318,15 @@
                 
                 const hSelect = document.getElementById('halaqaSelect');
                 hSelect.innerHTML = '';
-                if(appData.halaqat.length === 0) {
-                    hSelect.innerHTML = '<option>لا توجد حلقات، أنشئ واحدة</option>';
-                } else {
-                    appData.halaqat.forEach((h, i) => {
-                        hSelect.innerHTML += `<option value="${i}">${h.sheikh}</option>`;
-                    });
-                }
+                if(appData.halaqat.length === 0) hSelect.innerHTML = '<option>لا توجد حلقات</option>';
+                else appData.halaqat.forEach((h, i) => hSelect.innerHTML += `<option value="${i}">${h.sheikh}</option>`);
+                
                 document.getElementById('step-2').style.display = 'block';
-            } catch(e) {
-                alert("خطأ في قاعدة بيانات هذا المسجد! تأكد من الرابط الخاص به.");
-            }
+            } catch(e) { alert("خطأ في بيانات المسجد!"); }
             document.getElementById('loading-overlay').style.display = 'none';
         }
 
-        // --- 3. الدخول وإنشاء الحلقات ---
+        // --- 3. الدخول ---
         function attemptLogin() {
             if(appData.halaqat.length === 0) return;
             const idx = document.getElementById('halaqaSelect').value;
@@ -355,72 +338,69 @@
                 document.getElementById('app-content').style.display = 'block';
                 document.getElementById('app-controls').style.display = 'flex';
                 
-                // تعبئة البيانات
                 document.getElementById('app-mosque-title').innerText = currentMosqueData.name;
                 document.getElementById('display-sheikh').innerText = appData.halaqat[idx].sheikh;
-                
-                // بيانات الطباعة
                 document.getElementById('print-mosque-title').innerText = currentMosqueData.name;
                 document.getElementById('print-wilaya').innerText = currentMosqueData.wilaya;
                 document.getElementById('print-sheikh').innerText = appData.halaqat[idx].sheikh;
                 
                 render();
-            } else {
-                alert("الرمز السري غير صحيح!");
-            }
+            } else { alert("الرمز خطأ!"); }
         }
 
         function createHalaqa() {
-            const name = prompt("أدخل اسم المعلم:");
-            const pin = prompt("أنشئ رمز دخول (PIN):");
+            const name = prompt("اسم المعلم:");
+            const pin = prompt("رمز PIN:");
             if(name && pin) {
                 appData.halaqat.push({ sheikh: name, pin: pin, students: [] });
-                saveData();
-                alert("تم إنشاء الحلقة! اخترها من القائمة وسجل الدخول.");
-                location.reload(); // إعادة تحميل لتحديث القوائم
+                saveData(); alert("تم! اختر الحلقة الآن."); location.reload();
             }
         }
 
-        // --- 4. الحفظ والمزامنة ---
+        // --- 4. الحفظ السريع ---
         function queueSave() {
-            document.getElementById('save-status').innerText = "⏳";
-            clearTimeout(autoSaveTimer);
-            autoSaveTimer = setTimeout(saveData, 2000); // حفظ تلقائي بعد ثانيتين
+            const status = document.getElementById('save-status');
+            status.innerText = "⏳ جاري الحفظ...";
+            status.style.color = "#e67e22";
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(saveData, 1000); // حفظ بعد 1 ثانية فقط
         }
 
         async function saveData() {
             if(!currentMosqueData) return;
-            document.getElementById('save-status').innerText = "🔄";
-            document.getElementById('save-status').style.color = "#3498db";
-            
             try {
                 await fetch(currentMosqueData.url, {
                     method: 'POST', mode: 'no-cors',
                     headers: {'Content-Type': 'text/plain'},
                     body: JSON.stringify(appData)
                 });
-                document.getElementById('save-status').innerText = "✅";
+                document.getElementById('save-status').innerText = "البيانات محفوظة ✅";
                 document.getElementById('save-status').style.color = "#27ae60";
             } catch(e) {
-                document.getElementById('save-status').innerText = "❌";
+                document.getElementById('save-status').innerText = "❌ فشل الحفظ";
                 document.getElementById('save-status').style.color = "#c0392b";
             }
         }
 
-        // --- 5. العرض والتحكم (Render Logic) ---
+        function forceSync() {
+            if(confirm("تحديث البيانات من السيرفر؟")) {
+                document.getElementById('loading-overlay').style.display = 'flex';
+                loadMosqueData().then(() => {
+                    document.getElementById('loading-overlay').style.display = 'none';
+                    render();
+                });
+            }
+        }
+
+        // --- 5. العرض ---
         function render(filter="") {
             const list = document.getElementById('grid');
             list.innerHTML = '';
             const h = appData.halaqat[selectedHalaqaIdx];
             let pCount = 0;
             
-            // المنطق الذكي للترتيب: الحاضر أولاً (أبجدي)، ثم الغائب (أبجدي)
-            h.students.sort((a,b) => {
-                if (a.present !== b.present) return a.present ? -1 : 1;
-                return a.name.localeCompare(b.name, 'ar');
-            });
+            h.students.sort((a,b) => (a.present !== b.present) ? (a.present ? -1 : 1) : a.name.localeCompare(b.name, 'ar'));
 
-            // خيارات القوائم المنسدلة
             const levelsOpt = levelsList.map(l => `<option value="${l}">${l}</option>`).join('');
             const surahOpt = surahList.map((s, i) => `<option value="${i}">${s}</option>`).join('');
 
@@ -435,150 +415,100 @@
                     <button class="btn-del" onclick="deleteStudent(${idx}, event)">×</button>
                     <div class="icon-wrapper">${s.present ? '🕌' : '👤'}</div>
                     <div class="student-name">${s.name}</div>
-                    
                     <div class="student-tools" onclick="event.stopPropagation()">
-                        <div class="tool-row">
-                            <select class="mini-select level-sel" onchange="updateLevel(${idx}, this.value)">${levelsOpt}</select>
-                        </div>
+                        <div class="tool-row"><select class="mini-select level-sel" onchange="updateLevel(${idx}, this.value)">${levelsOpt}</select></div>
                         <div class="tool-row">
                             <button class="btn-step" onclick="stepSurah(${idx}, -1)">⬅️</button>
                             <select class="mini-select surah-sel" onchange="updateSurah(${idx}, this.value)">${surahOpt}</select>
                             <button class="btn-step" onclick="stepSurah(${idx}, 1)">➡️</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 
-                // تعيين القيم الحالية
                 if(s.present) {
                     setTimeout(() => {
                         div.querySelector('.level-sel').value = s.level || levelsList[0];
-                        div.querySelector('.surah-sel').value = s.surahIndex || 113; // الفلق افتراضياً
+                        div.querySelector('.surah-sel').value = s.surahIndex || 113;
                     }, 0);
                 }
-
-                // حدث النقر
                 div.onclick = (e) => { 
                     if(!e.target.closest('.student-tools') && !e.target.classList.contains('btn-del')) {
-                        s.present = !s.present; 
-                        render(filter); queueSave(); 
+                        s.present = !s.present; render(filter); queueSave(); 
                     }
                 };
-                
                 list.appendChild(div);
             });
             document.getElementById('count').innerText = `${pCount} / ${h.students.length}`;
         }
 
-        // --- دوال التعديل ---
+        // --- أدوات ---
         function addStudent() {
             const n = document.getElementById('newStudentName').value.trim();
             if(n) {
-                appData.halaqat[selectedHalaqaIdx].students.push({name: n, present: false, level: levelsList[0], surahIndex: 113});
-                document.getElementById('newStudentName').value = '';
-                render(); queueSave();
+                appData.halaqat[selectedHalaqaIdx].students.push({name:n, present:false, level:levelsList[0], surahIndex:113});
+                document.getElementById('newStudentName').value=''; render(); queueSave();
             }
         }
         function deleteStudent(idx, e) {
             e.stopPropagation();
-            if(confirm("حذف الطالب نهائياً؟")) {
-                appData.halaqat[selectedHalaqaIdx].students.splice(idx, 1);
-                render(); queueSave();
-            }
+            if(confirm("حذف الطالب؟")) { appData.halaqat[selectedHalaqaIdx].students.splice(idx, 1); render(); queueSave(); }
         }
-        function updateLevel(idx, val) { appData.halaqat[selectedHalaqaIdx].students[idx].level = val; queueSave(); }
-        function updateSurah(idx, val) { appData.halaqat[selectedHalaqaIdx].students[idx].surahIndex = parseInt(val); queueSave(); }
+        function updateLevel(idx, val) { appData.halaqat[selectedHalaqaIdx].students[idx].level=val; queueSave(); }
+        function updateSurah(idx, val) { appData.halaqat[selectedHalaqaIdx].students[idx].surahIndex=parseInt(val); queueSave(); }
         function stepSurah(idx, dir) {
             let s = appData.halaqat[selectedHalaqaIdx].students[idx];
-            let next = (s.surahIndex || 113) + dir;
-            if(next >= 0 && next < surahList.length) { s.surahIndex = next; render(); queueSave(); }
+            let next = (s.surahIndex||113)+dir;
+            if(next>=0 && next<surahList.length) { s.surahIndex=next; render(); queueSave(); }
         }
         function resetDay() {
-            if(confirm("هل تريد تصفير الحضور لبدء يوم جديد؟")) {
-                appData.halaqat[selectedHalaqaIdx].students.forEach(s => s.present = false);
-                render(); queueSave();
-            }
+            if(confirm("تصفير اليوم؟")) { appData.halaqat[selectedHalaqaIdx].students.forEach(s=>s.present=false); render(); queueSave(); }
         }
         function logout() { location.reload(); }
-
-        // --- ميزة القائمة (Bulk) ---
-        function openBulkModal() { document.getElementById('bulkModal').style.display = 'flex'; }
-        function closeBulkModal() { document.getElementById('bulkModal').style.display = 'none'; }
-        
-        function saveBulkData() {
-            const text = document.getElementById('bulkText').value;
-            const names = text.split('\n');
-            let addedCount = 0;
-            
-            names.forEach(n => {
-                n = n.trim();
-                if(n) {
-                    appData.halaqat[selectedHalaqaIdx].students.push({
-                        name: n, 
-                        present: false, 
-                        level: levelsList[0], 
-                        surahIndex: 113
-                    });
-                    addedCount++;
-                }
-            });
-            
-            if(addedCount > 0) {
-                document.getElementById('bulkText').value = '';
-                closeBulkModal();
-                render();
-                saveData();
-                alert("تم إضافة " + addedCount + " طالب بنجاح");
-            } else {
-                alert("لم يتم إدخال أي أسماء!");
+        function changeCurrentPin() {
+            const newPin = prompt("أدخل الرمز الجديد:");
+            if(newPin) { appData.halaqat[selectedHalaqaIdx].pin = newPin; saveData(); alert("تم التغيير!"); }
+        }
+        function deleteCurrentHalaqa() {
+            if(confirm("هل أنت متأكد من حذف هذه الحلقة نهائياً؟ لا يمكن التراجع!")) {
+                appData.halaqat.splice(selectedHalaqaIdx, 1);
+                saveData(); alert("تم الحذف"); logout();
             }
         }
 
-        // --- 6. الطباعة ---
+        // --- القائمة الجماعية ---
+        function openBulkModal() { document.getElementById('bulkModal').style.display = 'flex'; }
+        function closeBulkModal() { document.getElementById('bulkModal').style.display = 'none'; }
+        function saveBulkData() {
+            const txt = document.getElementById('bulkText').value;
+            const names = txt.split('\n');
+            names.forEach(n => {
+                if(n.trim()) appData.halaqat[selectedHalaqaIdx].students.push({name:n.trim(), present:false, level:levelsList[0], surahIndex:113});
+            });
+            document.getElementById('bulkText').value=''; closeBulkModal(); render(); queueSave();
+        }
+
         function printPDF() {
             const h = appData.halaqat[selectedHalaqaIdx];
             const now = new Date();
-            
-            // تعبئة الترويسة
-            document.getElementById('print-report-no').innerText = `REP-${now.getFullYear()}${now.getMonth()+1}${now.getDate()}-${now.getHours()}`;
+            document.getElementById('print-report-no').innerText = `REP-${now.getTime()}`;
             document.getElementById('print-date').innerText = now.toLocaleDateString('ar-DZ');
-            document.getElementById('print-stats').innerText = `حضور: ${h.students.filter(s=>s.present).length} | غياب: ${h.students.filter(s=>!s.present).length} | كلي: ${h.students.length}`;
-
-            // حساب الأطوار
-            let cPrim=0, cMid=0, cSec=0, cUniv=0;
+            document.getElementById('print-stats').innerText = `حضور: ${h.students.filter(s=>s.present).length} / ${h.students.length}`;
+            
+            let cP=0, cM=0, cS=0, cU=0;
             h.students.forEach(s => {
-                let l = s.level || "";
-                if(l.includes("إبتدائي")) cPrim++;
-                else if(l.includes("متوسط")) cMid++;
-                else if(l.includes("ثانوي")) cSec++;
-                else if(l.includes("جامعي")) cUniv++;
+                let l = s.level||"";
+                if(l.includes("إبتدائي")) cP++; else if(l.includes("متوسط")) cM++; else if(l.includes("ثانوي")) cS++; else if(l.includes("جامعي")) cU++;
             });
-            document.getElementById('c-prim').innerText = cPrim;
-            document.getElementById('c-mid').innerText = cMid;
-            document.getElementById('c-sec').innerText = cSec;
-            document.getElementById('c-univ').innerText = cUniv;
+            document.getElementById('c-prim').innerText=cP; document.getElementById('c-mid').innerText=cM; document.getElementById('c-sec').innerText=cS; document.getElementById('c-univ').innerText=cU;
 
-            // الجدول
             const tbody = document.getElementById('print-body');
             tbody.innerHTML = '';
-            
-            // ترتيب الطباعة (نفس ترتيب العرض)
+            // ترتيب الطباعة
             const sorted = [...h.students].sort((a,b) => (a.present !== b.present) ? (a.present?-1:1) : a.name.localeCompare(b.name,'ar'));
-            
-            let i = 1;
+            let c = 1;
             sorted.forEach(s => {
-                const stText = s.present ? 'حاضر' : 'غياب';
-                const stColor = s.present ? '#27ae60' : '#c0392b';
-                const surah = surahList[s.surahIndex||113];
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${i++}</td>
-                        <td style="text-align:right; font-weight:bold; padding-right:8px;">${s.name}</td>
-                        <td>${s.level || '-'}</td>
-                        <td style="color:${stColor}; font-weight:bold;">${stText}</td>
-                        <td>${surah}</td>
-                        <td></td>
-                    </tr>
-                `;
+                const st = s.present ? 'حاضر' : 'غياب';
+                const col = s.present ? '#27ae60' : '#c0392b';
+                tbody.innerHTML += `<tr><td>${c++}</td><td style="text-align:right; font-weight:bold;">${s.name}</td><td>${s.level||'-'}</td><td style="color:${col}; font-weight:bold;">${st}</td><td>${surahList[s.surahIndex||113]}</td><td></td></tr>`;
             });
             window.print();
         }
